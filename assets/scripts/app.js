@@ -7,6 +7,39 @@ class Product {
   }
 }
 
+class Shop {
+  render() {
+    const renderHook = document.getElementById("app");
+    const cart = new ShoppingCart();
+    const cartItem = cart.render();
+    const productList = new ProductList();
+    const productItem = productList.render();
+    renderHook.append(cartItem);
+    renderHook.append(productItem);
+  }
+}
+
+class ShoppingCart {
+  static items = [];
+  static totalOutput;
+
+  static addItem(product) {
+    this.items.push(product);
+    this.totalOutput.innerHTML = `<h2>Total: \$ ${1} </h2>`;
+  }
+
+  render() {
+    const cartEl = document.createElement("section");
+    cartEl.innerHTML = `
+            <h2>Total: \$ ${0} </h2>
+            <button>Order Now!</button>
+        `;
+    cartEl.className = "cart";
+    this.totalOutput = cartEl.querySelector("h2");
+    return cartEl;
+  }
+}
+
 class ProductItem {
   constructor(product) {
     this.product = product;
@@ -15,6 +48,7 @@ class ProductItem {
   addToCart() {
     console.log("adding to cart ...");
     console.log(this.product);
+    ShoppingCart.addItem(this.product);
   }
 
   render() {
@@ -53,16 +87,15 @@ class ProductList {
       "A carpet wich you might like"
     ),
   ];
-
   render() {
-    const renderHook = document.getElementById("app");
     const prodList = document.createElement("ul");
     this.products.forEach((product) => {
       const prodElement = new ProductItem(product).render();
       prodList.append(prodElement);
     });
-    renderHook.append(prodList);
+    return prodList;
   }
 }
 
-new ProductList().render();
+const shop = new Shop();
+shop.render();
