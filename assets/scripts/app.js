@@ -24,8 +24,9 @@ class ShoppingCart {
   static totalOutput;
 
   static addItem(product) {
-    this.items.push(product);
-    this.totalOutput.innerHTML = `<h2>Total: \$ ${1} </h2>`;
+    ShoppingCart.items.push(product);
+    const count = ShoppingCart.items.length;
+    ShoppingCart.totalOutput.innerHTML = `<h2>Total: \$ ${count} </h2>`;
   }
 
   render() {
@@ -35,7 +36,7 @@ class ShoppingCart {
             <button>Order Now!</button>
         `;
     cartEl.className = "cart";
-    this.totalOutput = cartEl.querySelector("h2");
+    ShoppingCart.totalOutput = cartEl.querySelector("h2");
     return cartEl;
   }
 }
